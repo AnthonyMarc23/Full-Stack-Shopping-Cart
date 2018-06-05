@@ -1,0 +1,83 @@
+* {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+.center {
+  margin: 0 auto;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.cart-container {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.cart-item {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
+  background-color: rgba(145, 145, 255, 0.822);
+  width: 250px;
+  margin: 10px 15px 10px 15px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 8px 8px -3px grey;
+}
+
+.add-item {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  width: 450px;
+  background: #00BCBCAC;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 8px 8px -3px grey;
+  margin-top: 30px;
+}
+
+.add-item input {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 5px 0px 0px 0px;
+  padding: 4px;
+  border-radius: 5px;
+  border: none;
+}
+
+.add-item button {
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  margin: 10px auto 0 auto;
+}
+
+.cart-item input {
+  width: 100%;
+  margin: 5px 0px 10px 0px;
+  padding: 4px;
+  border: none;
+  border-bottom: 1px solid grey;
+  border-radius: 3px;
+  background: transparent;
+}
+
+.header {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bolder;
+  text-align: center;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  font-size: 1.2rem;
+}
