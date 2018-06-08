@@ -1,76 +1,43 @@
 "use strict";
 
 const express = require("express");
+const pg = require("pg");
+const pool = require("../pg-connection-pool");
 const cartItemsRouter = express.Router();
 
-const cartItems = [
-  {
-    product: "Grand Circus Mug",
-    price: "5.00",
-    quantity: 10,
-    id: 0
-  },
-  {
-    product: "Grand Circus Duck",
-    price: "1.00",
-    quantity: 5000,
-    id: 1
-  }, 
-  {
-    product: "Adam Bobblehead",
-    price: "8.00",
-    quantity: 5,
-    id: 2
-  },  
-  {
-    product: "Fans",
-    price: "25.00",
-    quantity: 2,
-    id: 3
-  },
-];
-
-let idCount = 4;
 
 // Get Method
 cartItemsRouter.get("/cart-items", (request, response) => {
-  response.send(cartItems);
+  pool.query("SELECT * FROM shoppingcart ORDER BY id").then((result) => {
+    response.send(result.rows);
+  });
 });
 
 // Post method
 cartItemsRouter.post("/cart-items", (request, response) => {
-  cartItems.push({
-    product: request.body.product,
-    price: request.body.price,
-    quantity: request.body.quantity,
-    id: idCount++
-  })
-  response.send(cartItems);
+  pool.query("INSERT INTO shoppingcart (product, price, quantity) VALUES ($1::text, $2::money, $3::int)", [request.body.product, request.body.price, request.body.quantity]).then(() => {
+    pool.query("SELECT * FROM shoppingcart ORDER BY id").then((result) => {
+      response.send(result.rows);
+    });
+  });
 });
 
 // Create four separate routes, one for each method
 cartItemsRouter.delete("/cart-items/:id", (request, response) => {
-  for (let item of cartItems) {
-    if (item.id == request.params.id) {
-      cartItems.splice(cartItems.indexOf(item), 1);
-    }  
-  }
-  response.send(cartItems);
+  pool.query("DELETE FROM shoppingcart WHERE id=$1::int", [request.params.id]).then(() => {
+    pool.query("SELECT * FROM shoppingcart ORDER BY id").then((result) => {
+      response.send(result.rows);
+    });
+  });
 });
 
 // Create four separate routes, one for each method
 cartItemsRouter.put("/cart-items/:id", (request, response) => {
-  for (let item of cartItems) {
-    if (item.id == request.params.id) {
-      cartItems.splice(cartItems.indexOf(item), 1, {
-        product: request.body.product,
-        price: request.body.price,
-        quantity: request.body.quantity,
-        id: item.id
-      });
-    }  
-  }
-  response.send(cartItems);
+  pool.query("UPDATE shoppingcart SET product=$1::text, price=$2::money, quantity=$3::int WHERE id=$4::int", [request.body.product, request.body.price, request.body.quantity, request.params.id]).then(() => {
+    pool.query("SELECT * FROM shoppingcart ORDER BY id").then((result) => {
+      response.send(result.rows);
+    });
+  });
 });
 
 // Export the Router object

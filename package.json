@@ -10,6 +10,10 @@
   "author": "Anthony",
   "license": "ISC",
   "devDependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "nodemon": "^1.17.5"
+  },
+  "dependencies": {
+    "pg": "^7.4.3"
   }
 }
